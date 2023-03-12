@@ -10,6 +10,7 @@ inoremap jk <ESC>
 
 call plug#begin()
   Plug 'preservim/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -115,3 +116,16 @@ let g:airline#extensions#tabline#show_close_button = 0
 " カラースキームを変更
 colorscheme codedark
 let g:airline_theme = 'codedark'
+
+"" nerdtree-git-plugin
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
