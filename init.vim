@@ -30,6 +30,9 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 let g:gitgutter_highlight_lines = 1
 
 " coc-solargraphでの補完機能
+let g:LanguageClient_serverCommands = {
+  \ 'ruby': ['sh', '-c', 'rbenv exec solargraph --stdio']
+  \ }
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
