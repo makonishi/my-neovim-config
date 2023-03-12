@@ -8,26 +8,39 @@ set clipboard=unnamed
 " インサートからノーマルに移動
 inoremap jk <ESC>
 
-" ターミナルのインサートモードを抜ける
-:tnoremap <Esc> <C-\><C-n>
-" TerminalをVSCodeのように現在のウィンドウの下に開く
-command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
-" 常にインサートモードでTerminalを開く
-autocmd TermOpen * startinsert
-
 call plug#begin()
   Plug 'preservim/nerdtree'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'tomasiser/vim-code-dark'
+  Plug 'airblade/vim-gitgutter'
 call plug#end()
 
-" NERDTree ShortCuts
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+" タブラインの追加
+let g:airline#extensions#tabline#enabled = 1
 
-" git-gutter 
+" NERDTree ShortCuts
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+"" git-gutter 
 let g:gitgutter_highlight_lines = 1
+" g]で前の変更箇所へ移動する
+nnoremap g[ :GitGutterPrevHunk<CR>
+" g[で次の変更箇所へ移動する
+nnoremap g] :GitGutterNextHunk<CR>
+" ghでdiffをハイライトする
+nnoremap gh :GitGutterLineHighlightsToggle<CR>
+" gpでカーソル行のdiffを表示する
+nnoremap gp :GitGutterPreviewHunk<CR>
+" 記号の色を変更する
+highlight GitGutterAdd ctermfg=green
+highlight GitGutterChange ctermfg=blue
+highlight GitGutterDelete ctermfg=red
+" 反映時間を短くする(デフォルトは4000ms)
+set updatetime=250
 
 " coc-solargraphでの補完機能
 let g:LanguageClient_serverCommands = {
@@ -69,3 +82,36 @@ nnoremap <silent> <leader>G :GFiles?<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>h :History<CR>
 nnoremap <silent> <leader>r :Rg<CR>
+
+" [ノーマルモード] space, tで新しいターミナルタブを開く
+noremap <Space>t :tabnew<CR>:te<CR>
+
+" [ターミナルモード] Ctrl + [でノーマルモードに戻る
+tnoremap <C-[> <C-\><C-n>
+
+" Ctrl + q でターミナルを終了
+tnoremap <C-q> <C-\><C-n>:q<CR>
+
+"" vim-airline
+" ステータスラインに表示する項目を変更する
+let g:airline#extensions#default#layout = [
+  \ [ 'a', 'b', 'c' ],
+  \ ['z']
+  \ ]
+let g:airline_section_c = '%t %M'
+let g:airline_section_z = get(g:, 'airline_linecolumn_prefix', '').'%3l:%-2v'
+" 変更がなければdiffの行数を表示しない
+let g:airline#extensions#hunks#non_zero_only = 1 
+
+" タブラインの表示を変更する
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#show_close_button = 0
+
+" カラースキームを変更
+colorscheme codedark
+let g:airline_theme = 'codedark'
