@@ -18,6 +18,8 @@ call plug#begin()
   Plug 'vim-airline/vim-airline-themes'
   Plug 'tomasiser/vim-code-dark'
   Plug 'airblade/vim-gitgutter'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'sindrets/diffview.nvim'
 call plug#end()
 
 " タブラインの追加
@@ -118,7 +120,7 @@ colorscheme codedark
 let g:airline_theme = 'codedark'
 
 "" nerdtree-git-plugin
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
