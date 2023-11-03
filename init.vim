@@ -4,11 +4,22 @@ set tabstop=2
 set expandtab
 set expandtab
 set clipboard=unnamed
+set number
+set backspace=indent,eol,start
+set expandtab " タブ入力を複数の空白入力に置き換える
+set tabstop=2 " 画面上でタブ文字が占める幅
+set softtabstop=2 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
+set autoindent " 改行時に前の行のインデントを継続する
+set smartindent " 改行時に前の行の構文をチェックし次の行のインデントを増減する
+set shiftwidth=2 " smartindentで増減する幅
 
 " インサートからノーマルに移動
 inoremap jk <ESC>
+ map <C-l> gt
+ map <C-h> gT
 
 call plug#begin()
+  Plug 'cohama/lexima.vim'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -20,6 +31,12 @@ call plug#begin()
   Plug 'airblade/vim-gitgutter'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'sindrets/diffview.nvim'
+  Plug 'Yggdroot/indentLine'
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'hrsh7th/vim-vsnip-integ'
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+  Plug 'Quramy/tsuquyomi'
+  Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 " タブラインの追加
@@ -131,3 +148,21 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \ }
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
